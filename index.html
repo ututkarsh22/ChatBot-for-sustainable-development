@@ -1,0 +1,588 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Environmental Sustainability Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-color: #e8f5e9;
+            background-image: linear-gradient(120deg, #e8f5e9 0%, #c8e6c9 100%);
+        }
+        .chat-container {
+            width: 80%;
+            max-width: 800px;
+            height: 80vh;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+        }
+        .chat-header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 15px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+        
+        .share-button, .restart-button {
+            position: absolute;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 24px; /* Increased from 20px to 24px */
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 5px; /* Added padding for a larger clickable area */
+        }
+        
+        .share-button {
+            right: 15px;
+        }
+        
+        .restart-button {
+            right: 65px; /* Slightly increased to accommodate larger icon */
+        }
+        
+        .share-button:hover, .restart-button:hover {
+            opacity: 0.8;
+        }
+        
+        /* Toast notification for copy success */
+        .toast {
+            visibility: hidden;
+            min-width: 250px;
+            margin-left: -125px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 2px;
+            padding: 16px;
+            position: fixed;
+            z-index: 1;
+            left: 50%;
+            bottom: 30px;
+        }
+        
+        .toast.show {
+            visibility: visible;
+            animation: fadein 0.5s, fadeout 0.5s 2.5s;
+        }
+        
+        @keyframes fadein {
+            from {bottom: 0; opacity: 0;}
+            to {bottom: 30px; opacity: 1;}
+        }
+        
+        @keyframes fadeout {
+            from {bottom: 30px; opacity: 1;}
+            to {bottom: 0; opacity: 0;}
+        }
+        .chat-messages {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+        }
+        .message {
+            margin-bottom: 15px;
+            padding: 10px;
+            border-radius: 5px;
+            max-width: 70%;
+        }
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: auto;
+        }
+        .bot-message {
+            background-color: #f1f1f1;
+            position: relative;
+        }
+        
+        .copy-icon {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 3px;
+            opacity: 0.7;
+        }
+        
+        .copy-icon:hover {
+            opacity: 1;
+            color: #4CAF50;
+        }
+        .chat-input {
+            display: flex;
+            padding: 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+        .chat-input button {
+            padding: 10px 15px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .chat-input button:hover {
+            background-color: #388E3C;
+        }
+        .mic-button {
+            padding: 10px 15px;
+            background-color: #2196F3;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .mic-button:hover {
+            background-color: #0b7dda;
+        }
+        .mic-button.listening {
+            background-color: #f44336;
+            animation: pulse 1.5s infinite;
+        }
+        @keyframes pulse {
+            0% { opacity: 1; }
+            50% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 10px 15px;
+            border-top: 1px solid #e0e0e0;
+        }
+        .suggestion-chip {
+            background-color: #e8f5e9;
+            border: 1px solid #4CAF50;
+            border-radius: 16px;
+            padding: 6px 12px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .suggestion-chip:hover {
+            background-color: #c8e6c9;
+        }
+        
+        /* Edit icon for user messages */
+        .edit-icon {
+            position: absolute;
+            top: 5px;
+            left: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #666;
+            background: none;
+            border: none;
+            padding: 3px;
+            opacity: 0.7;
+        }
+        
+        .edit-icon:hover {
+            opacity: 1;
+            color: #2196F3;
+        }
+        
+        .user-message {
+            background-color: #e3f2fd;
+            margin-left: auto;
+            position: relative;
+            padding-left: 25px; /* Make room for the edit icon */
+        }
+        
+        /* Typing animation */
+        .typing-indicator {
+            display: flex;
+            padding: 10px;
+            background-color: #f1f1f1;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            width: fit-content;
+        }
+        
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background-color: #4CAF50;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            opacity: 0.6;
+        }
+        
+        .typing-indicator span:nth-child(1) {
+            animation: typing 1s infinite 0s;
+        }
+        
+        .typing-indicator span:nth-child(2) {
+            animation: typing 1s infinite 0.2s;
+        }
+        
+        .typing-indicator span:nth-child(3) {
+            animation: typing 1s infinite 0.4s;
+        }
+        
+        @keyframes typing {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-5px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="chat-header">
+            <h2>Environmental Sustainability Quiz Bot</h2>
+            <button id="restart-button" class="restart-button" title="Start a new chat">🔄</button>
+            <button id="share-button" class="share-button" title="Share this conversation">📤</button>
+        </div>
+        <div id="toast" class="toast">Conversation copied to clipboard!</div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message bot-message">Hello! I'm your Sustainability Quiz Bot. Ask me for a quiz on any environmental topic, or request information about sustainability. Try typing "quiz" or "give me a question about climate change"!</div>
+        </div>
+        <div class="suggestion-chips">
+            <div class="suggestion-chip" onclick="sendSuggestion('Give me a quiz')">Give me a quiz</div>
+            <div class="suggestion-chip" onclick="sendSuggestion('Quiz about renewable energy')">Quiz about renewable energy</div>
+            <div class="suggestion-chip" onclick="sendSuggestion('Question about recycling')">Question about recycling</div>
+            <div class="suggestion-chip" onclick="sendSuggestion('Tell me about climate change')">Tell me about climate change</div>
+        </div>
+        <div class="chat-input">
+            <button id="mic-button" class="mic-button"><i class="fas fa-microphone"></i> 🎤</button>
+            <input type="text" id="user-input" placeholder="Ask for a quiz or sustainability information..." autocomplete="off">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendButton = document.getElementById('send-button');
+            const micButton = document.getElementById('mic-button');
+            const shareButton = document.getElementById('share-button');
+            const restartButton = document.getElementById('restart-button');
+            const toast = document.getElementById('toast');
+            
+            // Restart button functionality
+            restartButton.addEventListener('click', function() {
+                // Clear chat messages except the first welcome message
+                while (chatMessages.children.length > 1) {
+                    chatMessages.removeChild(chatMessages.lastChild);
+                }
+                
+                // Clear the session cookie to start fresh
+                document.cookie = "session_id=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+                
+                // Show toast notification
+                toast.textContent = "Started a new chat!";
+                toast.className = "toast show";
+                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+                
+                // Reset the input field
+                userInput.value = '';
+                userInput.focus();
+            });
+            
+            // Share button functionality
+            shareButton.addEventListener('click', function() {
+                // Get all messages
+                const messages = chatMessages.querySelectorAll('.message');
+                let conversationText = "Environmental Sustainability Chat:\n\n";
+                
+                // Format each message
+                messages.forEach(message => {
+                    const isUser = message.classList.contains('user-message');
+                    const prefix = isUser ? "Me: " : "Bot: ";
+                    conversationText += prefix + message.textContent + "\n\n";
+                });
+                
+                // Copy to clipboard
+                navigator.clipboard.writeText(conversationText)
+                    .then(() => {
+                        // Show toast notification
+                        toast.className = "toast show";
+                        setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+                        
+                        // Try to use Web Share API if available
+                        if (navigator.share) {
+                            navigator.share({
+                                title: 'My Sustainability Chat',
+                                text: conversationText
+                            }).catch(err => {
+                                console.log('Error sharing:', err);
+                            });
+                        }
+                    })
+                    .catch(err => {
+                        console.error('Failed to copy text: ', err);
+                    });
+            });
+            
+            // Speech recognition setup
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            
+            if (SpeechRecognition) {
+                const recognition = new SpeechRecognition();
+                recognition.continuous = false;
+                recognition.lang = 'en-US';
+                recognition.interimResults = false;
+                recognition.maxAlternatives = 1;
+                
+                let isListening = false;
+                
+                micButton.addEventListener('click', function() {
+                    if (!isListening) {
+                        // Start listening
+                        recognition.start();
+                        isListening = true;
+                        micButton.classList.add('listening');
+                        userInput.placeholder = "Listening...";
+                    } else {
+                        // Stop listening
+                        recognition.stop();
+                        isListening = false;
+                        micButton.classList.remove('listening');
+                        userInput.placeholder = "Ask for a quiz or sustainability information...";
+                    }
+                });
+                
+                recognition.onresult = function(event) {
+                    const speechResult = event.results[0][0].transcript;
+                    userInput.value = speechResult;
+                    
+                    // Automatically send the message after speech recognition
+                    if (speechResult.trim()) {
+                        addMessage(speechResult, true);
+                        sendMessage(speechResult);
+                        // Clear the input field after sending the message
+                        userInput.value = '';
+                    }
+                    
+                    // Reset the mic button
+                    isListening = false;
+                    micButton.classList.remove('listening');
+                    userInput.placeholder = "Ask for a quiz or sustainability information...";
+                };
+                
+                recognition.onend = function() {
+                    // Reset the mic button when recognition ends
+                    isListening = false;
+                    micButton.classList.remove('listening');
+                    userInput.placeholder = "Ask for a quiz or sustainability information...";
+                };
+                
+                recognition.onerror = function(event) {
+                    console.error('Speech recognition error', event.error);
+                    // Reset the mic button on error
+                    isListening = false;
+                    micButton.classList.remove('listening');
+                    userInput.placeholder = "Ask for a quiz or sustainability information...";
+                };
+            } else {
+                // If speech recognition is not supported
+                micButton.style.display = 'none';
+                console.log('Speech recognition not supported');
+            }
+
+            // Function to add a message to the chat
+            function addMessage(message, isUser) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message');
+                messageDiv.classList.add(isUser ? 'user-message' : 'bot-message');
+                
+                // Check if the message contains HTML table markup
+                if (!isUser && (message.includes('<table') || message.includes('<ul>') || message.includes('<li>'))) {
+                    // Handle HTML content
+                    messageDiv.innerHTML = message;
+                } else {
+                    // Handle plain text with proper line breaks
+                    // Replace asterisks with proper HTML formatting
+                    const formattedMessage = message
+                        .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')  // Bold text
+                        .replace(/\*(.*?)\*/g, '<em>$1</em>')              // Italic text
+                        .replace(/\n/g, '<br>');                           // Line breaks
+                    
+                    messageDiv.innerHTML = formattedMessage;
+                }
+                
+                // Add buttons to bot messages
+                if (!isUser) {
+                    // Add speech button
+                    const speechButton = document.createElement('button');
+                    speechButton.classList.add('speech-icon');
+                    speechButton.innerHTML = '🔊';
+                    speechButton.title = 'Listen to this response';
+                    speechButton.addEventListener('click', function() {
+                        // Get the text content of the message
+                        const textToSpeak = message.replace(/<[^>]*>/g, ''); // Remove HTML tags
+                        
+                        // Check if already speaking
+                        const isSpeaking = window.speechSynthesis.speaking;
+                        
+                        // Use the Web Speech API for text-to-speech
+                        speakText(textToSpeak);
+                        
+                        // Don't show any toast here - it's handled in speakText function
+                    });
+                    messageDiv.appendChild(speechButton);
+                    
+                    // Add copy button
+                    const copyButton = document.createElement('button');
+                    copyButton.classList.add('copy-icon');
+                    copyButton.innerHTML = '📋';
+                    copyButton.title = 'Copy to clipboard';
+                    copyButton.addEventListener('click', function() {
+                        // Get the text content of the message
+                        const textToCopy = message.replace(/<[^>]*>/g, ''); // Remove HTML tags
+                        
+                        // Copy to clipboard
+                        navigator.clipboard.writeText(textToCopy)
+                            .then(() => {
+                                // Show toast notification
+                                toast.textContent = "Answer copied to clipboard!";
+                                toast.className = "toast show";
+                                setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 3000);
+                            })
+                            .catch(err => {
+                                console.error('Failed to copy text: ', err);
+                            });
+                    });
+                    messageDiv.appendChild(copyButton);
+                }
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Function to speak text using Web Speech API
+            function speakText(text) {
+                // Check if speaking and toggle behavior
+                if (window.speechSynthesis.speaking) {
+                    window.speechSynthesis.cancel();
+                    // Show toast notification
+                    toast.textContent = "Speech stopped";
+                    toast.className = "toast show";
+                    setTimeout(function(){ toast.className = toast.className.replace("show", ""); }, 2000);
+                    return;
+                }
+                
+                // Create a new speech synthesis utterance
+                const utterance = new SpeechSynthesisUtterance(text);
+                
+                // Set properties (optional)
+                utterance.lang = 'en-US';
+                utterance.rate = 1.0;  // Speed: 0.1 to 10
+                utterance.pitch = 1.0; // Pitch: 0 to 2
+                
+                // Speak the text
+                window.speechSynthesis.speak(utterance);
+            }
+
+            // Function to send message to the backend
+            async function sendMessage(message) {
+                try {
+                    // Show typing indicator
+                    const typingIndicator = document.createElement('div');
+                    typingIndicator.className = 'typing-indicator';
+                    typingIndicator.innerHTML = '<span></span><span></span><span></span>';
+                    chatMessages.appendChild(typingIndicator);
+                    chatMessages.scrollTop = chatMessages.scrollHeight;
+                    
+                    const response = await fetch('/chat', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ message: message }),
+                        credentials: 'same-origin'  // Include cookies in the request
+                    });
+
+                    // Remove typing indicator
+                    chatMessages.removeChild(typingIndicator);
+
+                    if (!response.ok) {
+                        throw new Error('Network response was not ok');
+                    }
+
+                    const data = await response.json();
+                    addMessage(data.response, false);
+                    
+                    // If there's a session_id in the response, store it
+                    if (data.session_id) {
+                        document.cookie = `session_id=${data.session_id}; max-age=3600; path=/`;
+                    }
+                } catch (error) {
+                    // Remove typing indicator in case of error
+                    const typingIndicator = document.querySelector('.typing-indicator');
+                    if (typingIndicator) {
+                        chatMessages.removeChild(typingIndicator);
+                    }
+                    
+                    console.error('Error:', error);
+                    addMessage('Sorry, there was an error processing your request.', false);
+                }
+            }
+
+            // Function to handle suggestion chips
+            window.sendSuggestion = function(suggestion) {
+                addMessage(suggestion, true);
+                userInput.value = '';
+                sendMessage(suggestion);
+            };
+
+            // Event listener for send button
+            sendButton.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message) {
+                    addMessage(message, true);
+                    userInput.value = '';
+                    sendMessage(message);
+                }
+            });
+
+            // Event listener for Enter key
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    const message = userInput.value.trim();
+                    if (message) {
+                        addMessage(message, true);
+                        userInput.value = '';
+                        sendMessage(message);
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>
