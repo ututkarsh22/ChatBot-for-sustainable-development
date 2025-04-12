@@ -13,6 +13,8 @@ jobs:
     runs-on: ubuntu-24.04
     steps:
     - uses: actions/checkout@v4
+    - name: Make rfc.sh executable
+      run: chmod +x ./share/adapters/rfc.sh    
     - run: ./share/adapters/rfc.sh
     - name: install dependencies
       run: pip install --upgrade -r requirements.txt
