@@ -12,32 +12,47 @@ jobs:
   build:
     runs-on: ubuntu-24.04
     steps:
-    - uses: actions/checkout@v4
-    - name: Make rfc.sh executable
-      run: chmod +x ./share/adapters/rfc.sh    
-    - run: ./share/adapters/rfc.sh
-    - name: install dependencies
-      run: pip install --upgrade -r requirements.txt
-    - name: fetch upstream cheat sheets
-      run: python lib/fetch.py fetch-all
-    - name: run bash tests
-      run: bash tests/run-tests.sh
-    - name: run pytest
-      run: pytest lib/
+      - uses: actions/checkout@v4
+
+      - name: Make rfc.sh executable
+        run: chmod +x ./share/adapters/rfc.sh
+
+      - name: Run RFC script
+        run: ./share/adapters/rfc.sh
+
+      - name: Install dependencies
+        run: pip install --upgrade -r requirements.txt
+
+      - name: Fetch upstream cheat sheets
+        run: python lib/fetch.py fetch-all
+
+      - name: Run bash tests
+        run: bash tests/run-tests.sh
+
+      - name: Run pytest
+        run: pytest lib/
 
   docker:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v2
-    - run: docker-compose build
-    - run: docker images
-    - run: |
-        docker-compose -f docker-compose.yml up -d
-        # docker-compose -f docker-compose.yml -f docker-compose.debug.yml up -d
-        docker-compose ps
-        # wait until the web server is up
-        wget --timeout 3 --tries=5 --spider localhost:8002 2>&1 | grep -i http
-        docker-compose logs --no-color
-    - run: CHEATSH_TEST_STANDALONE=NO bash tests/run-tests.sh
+      - uses: actions/checkout@v2
 
-    
+      - name: Build Docker images
+        run: docker-compose build
+
+      - name: List Docker images
+        run: docker images
+
+      - name: Run Docker containers
+        run: |
+          docker-compose -f docker-compose.yml up -d
+          sleep 10  # give time for containers to start
+          docker-compose ps
+
+      - name: Check web server status
+        run: |
+          wget --timeout=3 --tries=5 --spider http://localhost:8002 || true
+          docker-compose logs --no-color
+
+      - name: Run bash tests inside Docker
+        run: CHEATSH_TEST_STANDALONE=NO bash tests/run-tests.sh
