@@ -1,6 +1,6 @@
 # ChatBot-for-sustainable-development
 
- This project is an AI-powered chatbot designed to promote awareness, education, and engagement around the **United Nations Sustainable Development Goals. The chatbot interacts with users on topics like clean energy, climate action, quality education, and more — serving as a virtual advocate for sustainability.
+ This project is an AI-powered chatbot designed to promote awareness, education, and engagement around the  Sustainable Development Goals. The chatbot interacts with users on topics like clean energy, climate action, quality education, and more serving as a virtual advocate for sustainability.
 
 
  Given the project from college in Artificial Intelligence subject, we have to make the chat-bot for Sustainable development quiz and answers.
