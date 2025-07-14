@@ -10,7 +10,7 @@ try:
 except Exception as e:
     print(f"Warning: Could not load .env file: {str(e)}")
 
-# Get API key from environment variables or use a hardcoded on
+# Get API key from environment variables or use a hardcoded one
 api_key = os.getenv('GEMINI_API_KEY')
 if not api_key:
     # Hardcoded API key - using your provided key
