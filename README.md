@@ -35,11 +35,11 @@ This chatbot was built as part of my exploration into combining **technology for
 
 ## 📷 Demo
 
-![Chatbot Screenshot](<img src="assets/Screenshot 2025-07-14 162139.png" alt="Chatbot Screenshot" height="300">)
-![Replying screenshot](<img src="https://github.com/user-attachments/assets/8645560a-13fa-4023-a829-6fd840a431ee" alt="Chatbot Screenshot" height="300">)
-![Quiz option screenshot](<img src="https://github.com/user-attachments/assets/d0508969-c52d-452f-bfb5-0482d2ee97d4" alt="Chatbot Screenshot" height="300">)
-![Chat Shareable screenshot](<img src="https://github.com/user-attachments/assets/8963cb99-6f39-408d-93e2-342f39d0e907" alt="Chatbot Screenshot" height="300">)
-![Full after chat screenshot]( <img src="https://github.com/user-attachments/assets/b4dd42ea-3d3e-4ea9-b11a-440905184b64" alt="Chatbot Screenshot" height="300">)
+<img src="assets/Screenshot 2025-07-14 162139.png" alt="Chatbot Screenshot" height="300">
+<img src="https://github.com/user-attachments/assets/8645560a-13fa-4023-a829-6fd840a431ee" alt="Chatbot Screenshot" height="300")
+<img src="https://github.com/user-attachments/assets/d0508969-c52d-452f-bfb5-0482d2ee97d4" alt="Chatbot Screenshot" height="300">
+<img src="https://github.com/user-attachments/assets/8963cb99-6f39-408d-93e2-342f39d0e907" alt="Chatbot Screenshot" height="300">
+ <img src="https://github.com/user-attachments/assets/b4dd42ea-3d3e-4ea9-b11a-440905184b64" alt="Chatbot Screenshot" height="300">
 
 ---
 
