@@ -35,12 +35,11 @@ This chatbot was built as part of my exploration into combining **technology for
 
 ## 📷 Demo 
 
-![Chatbot Screenshot](<img width="1105" height="905" alt="Screenshot 2025-07-14 162139" src="https://github.com/user-attachments/assets/0e399da6-0c22-4c38-ba29-7680f9a1f267" />)
-![Replying screenshot](<img width="948" height="297" alt="Screenshot 2025-07-14 162258" src="https://github.com/user-attachments/assets/8645560a-13fa-4023-a829-6fd840a431ee" />)
-![Quiz option screenshot](<img width="952" height="871" alt="Screenshot 2025-07-14 162323" src="https://github.com/user-attachments/assets/d0508969-c52d-452f-bfb5-0482d2ee97d4" />)
-![Chat Shareable screenshot](<img width="962" height="875" alt="Screenshot 2025-07-14 162347" src="https://github.com/user-attachments/assets/8963cb99-6f39-408d-93e2-342f39d0e907" />)
-![Full after chat screenshot](<img width="1033" height="912" alt="Screenshot 2025-07-14 162423" src="https://github.com/user-attachments/assets/b4dd42ea-3d3e-4ea9-b11a-440905184b64" />
-)
+![Chatbot Screenshot](https://github.com/user-attachments/assets/69f77687-4df4-4230-b643-10bc371d044c)
+![Replying screenshot](https://github.com/user-attachments/assets/8645560a-13fa-4023-a829-6fd840a431ee)
+![Quiz option screenshot](https://github.com/user-attachments/assets/d0508969-c52d-452f-bfb5-0482d2ee97d4)
+![Chat Shareable screenshot](https://github.com/user-attachments/assets/8963cb99-6f39-408d-93e2-342f39d0e907)
+![Full after chat screenshot](https://github.com/user-attachments/assets/b4dd42ea-3d3e-4ea9-b11a-440905184b64)
 
 ---
 
