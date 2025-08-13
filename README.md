@@ -20,8 +20,8 @@ This chatbot was built as part of my exploration into combining **technology for
 - **Python** – core logic and backend
 - **Natural Language Toolkit (NLTK)** – for NLP processing
 - **Tkinter / Web Interface** – for GUI/chat window (if GUI is included)
-- *(Optional)* Flask – for web deployment
-- *(Optional)* APIs – for dynamic responses or sustainability data
+- **Flask – for web deployment
+- **APIs – for dynamic responses or sustainability data
 
 ---
 
