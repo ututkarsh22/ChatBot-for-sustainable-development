@@ -8,3 +8,4 @@ typescript
 venv/
 bin/upstream
 upstream/
+.env
