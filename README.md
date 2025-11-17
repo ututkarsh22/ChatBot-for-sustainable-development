@@ -1,3 +1,4 @@
+
 # ChatBot-for-sustainable-development
 
  This project is an AI-powered chatbot designed to promote awareness, education, and engagement around the  Sustainable Development Goals. The chatbot interacts with users on topics like clean energy, climate action, quality education, and more serving as a virtual advocate for sustainability.
@@ -19,8 +20,8 @@ This chatbot was built as part of my exploration into combining **technology for
 - **Python** – core logic and backend
 - **Natural Language Toolkit (NLTK)** – for NLP processing
 - **Tkinter / Web Interface** – for GUI/chat window (if GUI is included)
-- *(Optional)* Flask – for web deployment
-- *(Optional)* APIs – for dynamic responses or sustainability data
+- **Flask** – for web deployment
+- **APIs** – for dynamic responses or sustainability data
 
 ---
 
@@ -33,13 +34,13 @@ This chatbot was built as part of my exploration into combining **technology for
 
 ---
 
-## 📷 Demo 
+## 📷 Demo
 
-![Chatbot Screenshot](<img src="https://github.com/user-attachments/assets/69f77687-4df4-4230-b643-10bc371d044c" alt="Chatbot Screenshot" height="300">)
-![Replying screenshot](<img src="https://github.com/user-attachments/assets/8645560a-13fa-4023-a829-6fd840a431ee" alt="Chatbot Screenshot" height="300">)
-![Quiz option screenshot](<img src="https://github.com/user-attachments/assets/d0508969-c52d-452f-bfb5-0482d2ee97d4" alt="Chatbot Screenshot" height="300">)
-![Chat Shareable screenshot](<img src="https://github.com/user-attachments/assets/8963cb99-6f39-408d-93e2-342f39d0e907" alt="Chatbot Screenshot" height="300">)
-![Full after chat screenshot]( <img src="https://github.com/user-attachments/assets/b4dd42ea-3d3e-4ea9-b11a-440905184b64" alt="Chatbot Screenshot" height="300">)
+<img  height="300" alt="Screenshot 2025-07-14 162139" src="https://github.com/user-attachments/assets/e1fcb8fb-181e-4aa2-be45-116b54c99cf2" />
+<img src="https://github.com/user-attachments/assets/8645560a-13fa-4023-a829-6fd840a431ee" alt="Chatbot Screenshot" height="300">
+<img src="https://github.com/user-attachments/assets/d0508969-c52d-452f-bfb5-0482d2ee97d4" alt="Chatbot Screenshot" height="300">
+<img src="https://github.com/user-attachments/assets/8963cb99-6f39-408d-93e2-342f39d0e907" alt="Chatbot Screenshot" height="300">
+<img src="https://github.com/user-attachments/assets/b4dd42ea-3d3e-4ea9-b11a-440905184b64" alt="Chatbot Screenshot" height="300">
 
 ---
 
